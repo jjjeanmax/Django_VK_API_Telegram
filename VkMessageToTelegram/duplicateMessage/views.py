@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 from django.conf import settings
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt

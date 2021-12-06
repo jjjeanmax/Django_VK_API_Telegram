@@ -19,6 +19,7 @@ class UserGroup(models.Model):
     message = models.JSONField(verbose_name='содержимое сообщения (JSON)', null=True, blank=True)
     send_message = models.BooleanField(default=False)
     group_user = models.ForeignKey(GroupVK, on_delete=models.CASCADE, verbose_name='Group User')
+    create_at = models.DateTimeField(verbose_name='time of sending message', auto_now_add=True)
 
     def __str__(self):
         return f"{self.message} from user {self.first_name} {self.last_name} is {self.group_user}"

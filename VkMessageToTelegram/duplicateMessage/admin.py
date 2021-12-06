@@ -23,7 +23,7 @@ class AdminGroupVk(admin.ModelAdmin):
 @admin.register(UserGroup)
 class AdminUserGroup(admin.ModelAdmin):
     form = JsonForm
-    list_display = ('first_name', 'last_name', 'message', 'send_message', 'group_user',)
+    list_display = ('first_name', 'last_name', 'message', 'send_message', 'group_user','create_at',)
     fields = ('first_name', 'last_name', 'message', 'send_message', 'group_user',)
 
     def has_delete_permission(self, request, obj=None):

@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     # 'drf_yasg',
 
     'duplicateMessage',
-
 ]
 
 MIDDLEWARE = [
