@@ -5,7 +5,6 @@ from .secret import get_secret
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -16,7 +15,6 @@ SECRET_KEY = 'django-insecure-uoq@xje@84i!9-iha&k3!aje9+1txn-+02v5!_@__pbmav&0te
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -31,7 +29,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'prettyjson',
     # 'drf_yasg',
-    
+
     'duplicateMessage',
 
 ]
@@ -66,7 +64,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'VkMessageToTelegram.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -80,7 +77,6 @@ DATABASES = {
         'PASSWORD': get_secret(section='DATABASE', setting='PASSWORD'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -100,7 +96,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -114,7 +109,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -124,3 +118,9 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# VK
+VK_ACCESS_TOKEN = get_secret(section='VK', setting='TOKEN'),
+VK_HOOK_SECRET = get_secret(section='VK', setting='HOOK_SECRET'),
+VK_GROUP_ID = get_secret(section='VK', setting='GROUP_ID'),
+VK_CHAT_ID = get_secret(section='VK', setting='CHAT_ID'),
