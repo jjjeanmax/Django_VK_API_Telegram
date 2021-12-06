@@ -3,8 +3,7 @@ import logging
 from aiogram import Bot, Dispatcher, types
 
 from secret import get_secret
-from data_fetch import get_last_sms
-
+from data_fetch import get_last_sms, update_last_sms
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -20,12 +19,13 @@ async def send_welcome(message: types.Message):
     """
     This handler will be called when client send `/start` or `/help` commands.
     """
-    await message.reply("Hi!\nI'm EchoBot!\nPowered by aiogram.")
+    await message.reply("Hi!\nI'm EchoBot!\nPowered by jjjmax.")
 
 
 @dp.message_handler(commands=['message'])
 async def echo(message: types.Message):
     # get last message
     res = await get_last_sms()
-    await bot.send_message(message.chat.id, f"message from {res['first_name']} {res['last_name']} in Group: {res['groups_user']}")
+    await bot.send_message(message.chat.id, f"message from {res['first_name']} {res['last_name']}")
+    await bot.send_message(message.chat.id, f"message: {res['message']}")
 
