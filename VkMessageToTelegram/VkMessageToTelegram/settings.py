@@ -123,3 +123,4 @@ VK_ACCESS_TOKEN = get_secret(section='VK', setting='TOKEN'),
 VK_HOOK_SECRET = get_secret(section='VK', setting='HOOK_SECRET'),
 VK_GROUP_ID = get_secret(section='VK', setting='GROUP_ID'),
 VK_CHAT_ID = get_secret(section='VK', setting='CHAT_ID'),
+ID_GROUP_CHAT = 20000000 + int(VK_CHAT_ID[0])

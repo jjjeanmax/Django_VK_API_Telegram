@@ -1,20 +1,32 @@
-from django.conf import settings
-from django.views import View
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
-from django.http import HttpResponse
-import json
-
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from VkMessageToTelegram.vk import vkSession
 from duplicateMessage.serializers import UserGroupSerialiser
+from get_last_message_is_vk import get_data
 from .models import UserGroup
 
 
 class GetNewUserData(APIView):
+    """ получение сообщения от Нового пользователя в VK
+
+        Parameters
+        ----------
+        first_name : str
+            Имя
+
+        last_name : str
+            Фамилия
+
+        message : str
+            Сообщение
+
+        create_at : int
+            дата отправки сообщение
+        Returns
+        -------
+        str
+        """
     @staticmethod
     def get(request):
         qs = UserGroup.objects.values('first_name', 'last_name', 'message', 'create_at').order_by('-create_at').first()
@@ -26,6 +38,7 @@ class GetNewUserData(APIView):
         }
 
         serializer = UserGroupSerialiser(data=data)
+
         # Проверка соответствия формата данных
         serializer.is_valid(raise_exception=True)
 
@@ -33,27 +46,29 @@ class GetNewUserData(APIView):
 
 
 class PutNewUserMessageInChatData(APIView):
+    """ обновление сообщения пользователя в VK
+
+        Parameters
+        ----------
+        first_name : str
+            Имя
+
+        last_name : str
+            Фамилия
+
+        message : str
+            Сообщение
+
+        create_at : int
+            дата отправки сообщение
+        Returns
+        -------
+        str
+        """
     @staticmethod
     def put(request):
-        message = vkSession.method("messages.getConversations", {"peer_ids": 2000000026})
-
-        id_chat = []
-        for i in range(len(message['items'])):
-            ids = message['items'][i]['conversation']['peer']['id']
-            id_chat.append(ids)
-        if 2000000026 in id_chat:
-            indx = id_chat.index(2000000026)
-            print(message['items'][indx].get('last_message'))
-            id_user = message['items'][indx].get('last_message').get('from_id')
-            mess = message['items'][indx].get('last_message').get('text')
-            _date = message['items'][indx].get('last_message').get('date')
-
-        data = {}
-        user_inf = vkSession.method("users.get", {"user_id": id_user})
-        data['first_name'] = user_inf[0]['first_name']
-        data['last_name'] = user_inf[0]['last_name']
-        data['message'] = mess
-        data['create_at'] = _date
+        data = get_data()
+        print(data)
 
         serializer = UserGroupSerialiser(data=data)
 
@@ -61,15 +76,18 @@ class PutNewUserMessageInChatData(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         data_to_save = UserGroup(
-            first_name=user_inf[0]['first_name'],
-            last_name=user_inf[0]['last_name'],
-            message=mess,
-            create_at=_date
+            first_name=data['first_name'],
+            last_name=data['last_name'],
+            message=data['message'],
+            create_at=data['create_at']
         )
+
         qs = UserGroup.objects.values('first_name', 'last_name', 'message', 'create_at')
         for cr in qs:
             if cr['create_at'] == data['create_at']:
                 return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
+
+        # TODO: celery task
         data_to_save.save()
         return Response(status=status.HTTP_201_CREATED, data="save")
 
