@@ -14,7 +14,6 @@ bot = Bot(token=get_secret(section='TELEGRAM', setting='TELEGRAM_TOKEN'))
 dp = Dispatcher(bot,loop=True,run_tasks_by_default=True)
 
 
-
 @dp.message_handler(commands=['start', 'help'])
 async def send_welcome(message: types.Message):
     """

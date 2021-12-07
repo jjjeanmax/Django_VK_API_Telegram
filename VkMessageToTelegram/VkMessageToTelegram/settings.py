@@ -28,7 +28,8 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'prettyjson',
-    # 'drf_yasg',
+    'drf_yasg',
+    'debug_toolbar',
 
     'duplicateMessage',
 ]
@@ -41,6 +42,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'VkMessageToTelegram.urls'

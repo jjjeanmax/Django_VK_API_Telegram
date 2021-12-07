@@ -3,7 +3,7 @@ from vk_api import VkApi
 from vk_api import VkUpload
 
 
-# FIXME: Использовать Callback API-VK
+# FIXME: Использовать Callback API-VK Чтобы каждый раз не обновить ссыльку на Update Сообщения
 #  Callback API — это инструмент для отслеживания активности пользователей в сообществе ВКонтакте.
 
 

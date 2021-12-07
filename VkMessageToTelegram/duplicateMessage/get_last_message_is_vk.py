@@ -12,7 +12,6 @@ def get_data() -> dict:
     # TODO: 200000026 = 20000000 + id_chat  --> in variable
     if 2000000026 in id_chat:
         indx = id_chat.index(2000000026)
-        print(message['items'][indx].get('last_message'))
         id_user = message['items'][indx].get('last_message').get('from_id')
         mess = message['items'][indx].get('last_message').get('text')
         _date = message['items'][indx].get('last_message').get('date')
