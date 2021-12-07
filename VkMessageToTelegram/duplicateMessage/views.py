@@ -1,9 +1,18 @@
+from django.conf import settings
+from django.views import View
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.http import HttpResponse
+import json
+
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from duplicateMessage.serializers import UserGroupSerialiser
 from get_last_message_is_vk import get_data
+from VkMessageToTelegram.vk import vkSession
+from duplicateMessage.serializers import UserGroupSerialiser
 from .models import UserGroup
 
 
@@ -27,6 +36,7 @@ class GetNewUserData(APIView):
         -------
         str
         """
+
     @staticmethod
     def get(request):
         qs = UserGroup.objects.values('first_name', 'last_name', 'message', 'create_at').order_by('-create_at').first()
@@ -69,6 +79,27 @@ class PutNewUserMessageInChatData(APIView):
     def put(request):
         data = get_data()
         print(data)
+    @staticmethod
+    def put(request):
+        message = vkSession.method("messages.getConversations", {"peer_ids": 2000000026})
+
+        id_chat = []
+        for i in range(len(message['items'])):
+            ids = message['items'][i]['conversation']['peer']['id']
+            id_chat.append(ids)
+        if 2000000026 in id_chat:
+            indx = id_chat.index(2000000026)
+            print(message['items'][indx].get('last_message'))
+            id_user = message['items'][indx].get('last_message').get('from_id')
+            mess = message['items'][indx].get('last_message').get('text')
+            _date = message['items'][indx].get('last_message').get('date')
+
+        data = {}
+        user_inf = vkSession.method("users.get", {"user_id": id_user})
+        data['first_name'] = user_inf[0]['first_name']
+        data['last_name'] = user_inf[0]['last_name']
+        data['message'] = mess
+        data['create_at'] = _date
 
         serializer = UserGroupSerialiser(data=data)
 
@@ -82,6 +113,12 @@ class PutNewUserMessageInChatData(APIView):
             create_at=data['create_at']
         )
 
+
+            first_name=user_inf[0]['first_name'],
+            last_name=user_inf[0]['last_name'],
+            message=mess,
+            create_at=_date
+        )
         qs = UserGroup.objects.values('first_name', 'last_name', 'message', 'create_at')
         for cr in qs:
             if cr['create_at'] == data['create_at']:
