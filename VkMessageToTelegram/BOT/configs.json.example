@@ -1,6 +1,9 @@
 {
    "TELEGRAM": {
     "TELEGRAM_TOKEN": "",
-     "URL_LAST_SMS": ""
+     "URL_LAST_SMS": "http://127.0.0.1:8000/vk/user/",
+     "CHAT_ID": ""
+
+
   }
 }
