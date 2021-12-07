@@ -19,12 +19,12 @@ async def send_welcome(message: types.Message):
     """
     This handler will be called when client send `/start` or `/help` commands.
     """
-    await message.reply("Hi!\nI'm EchoBot!\nPowered by jjjmax.")
+    await message.reply("Hi!\nI'm EchoBot!\nPowered by jjjmax. /message to get message of new user")
 
 
 @dp.message_handler(commands=['message'])
 async def echo(message: types.Message):
     # get last message
     res = await get_last_sms()
-    await bot.send_message(message.chat.id, f"message from {res['first_name']} {res['last_name']}")
+    await bot.send_message(message.chat.id, f" Пишет новый пользователь {res['first_name']} {res['last_name']}")
     await bot.send_message(message.chat.id, f"message: {res['message']}")
