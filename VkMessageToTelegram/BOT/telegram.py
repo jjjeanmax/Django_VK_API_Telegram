@@ -1,17 +1,16 @@
 import logging
-import requests
+
 from aiogram import Bot, Dispatcher, types
 
 from secret import get_secret
 from data_fetch import get_last_sms
-
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
 # Initialize bot and dispatcher
 bot = Bot(token=get_secret(section='TELEGRAM', setting='TELEGRAM_TOKEN'))
-dp = Dispatcher(bot,loop=True,run_tasks_by_default=True)
+dp = Dispatcher(bot, loop=True, run_tasks_by_default=True)
 
 
 @dp.message_handler(commands=['start', 'help'])

@@ -18,7 +18,7 @@ class JsonForm(forms.ModelForm):
 class AdminUserGroup(admin.ModelAdmin):
     form = JsonForm
     list_display = ('first_name', 'last_name', 'message', 'send_message','create_at',)
-    fields = ('first_name', 'last_name', 'message', 'send_message',)
+    fields = ('first_name', 'last_name', 'message', 'send_message','create_at',)
 
     def has_delete_permission(self, request, obj=None):
         return True

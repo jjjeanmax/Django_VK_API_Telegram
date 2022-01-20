@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path,include
 from duplicateMessage import urls as vk_urls
-from yasg import schema_view
+from .yasg import schema_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
