@@ -1,52 +1,47 @@
 # Django_VK_API_Telegram
-сервис Django который будет работать через API - VK и дублировать сообщения группы в VK в групповой чат в Telegram
+Django service that will work through the API - VK and duplicate group messages in VK in a group chat in Telegram
 
-
-Django REST - API, с методами:
+Django REST - API, with methods:
 -
-    Получаем сообщение внутри группы VK
-    Сохраняем в базу данных Postgres
-    При получении сообщения от Нового пользователя в VK,  
-    оправить сообщения “Пишет новый пользователь {Имя, Фамилия}”
-    Отправляем сообщение в группу в Telegram
+     We receive a message inside the VK group
+     Saving to a Postgres database
+     When receiving a message from a New user in VK,
+     send messages “Written by a new user {Name, Surname}”
+     Sending a message to a group in Telegram
 
 - USE CallBak vk-api to track user activity
 
 
-## Старт
+## Start
 
-1. Создать и активировать виртуальное окружение:
+1. Create and activate virtual environment:
 
     `python -m venv venv`
 
-2. Установить пакеты :
+2. Install packages:
 
     `pip install -r requirements.txt`
 
-3. Выполнить команду для выполнения миграций:
+3. Run migrations:
 
     `python manage.py migrate`
 
-4. Создать статичные файлы: 
-
-    `python manage.py collectstatic`
-
-5. Создать суперпользователя:
+4. Create superuser:
 
     `python manage.py createsuperuser`
 
-6. Создать конфиг-файл:
+4. Create config file:
 
     `configs.json`
 
-7. Запустить сервер django:
+6. Start django server:
     
     `$ python manage.py runserver`
 
-8. Запустить сервер telegram из репозитории BOT :
+7. Start telegram server from BOT repository:
     
     `$ python main.py`
 
-### Документация доступна в docs:
+### Documentation is available in docs:
 > http://127.0.0.1:8000/docs/
 
